@@ -6,9 +6,8 @@ on:
       - main
 
 env:
-  DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-  DOCKERHUB_KEY: ${{ secrets.DOCKER_KEY }}
-  IMAGE_NAME: app-helm
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-deploy:
@@ -21,7 +20,7 @@ jobs:
       - name: Log into ghcr.io
         uses: docker/login-action@master
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
